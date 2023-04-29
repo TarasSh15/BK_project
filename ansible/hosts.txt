@@ -1,0 +1,10 @@
+
+[production]
+apache_srv   ansible_host=18.198.208.200
+
+[staging]
+jenkins_srv  ansible_host=18.185.121.182
+
+[same_cred:children]
+staging
+production

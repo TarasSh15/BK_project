@@ -1,0 +1,114 @@
+
+---
+- name: Install Docker and Apache
+  hosts: all
+  become: yes
+
+  # vars: 
+  #  source_dir: ./site
+  #  destin_dir: /var/www/html 
+
+  tasks:
+
+  - name: Install required system packages for Docker
+    apt:
+      pkg:
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+      state: latest
+      update_cache: true
+
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu focal stable
+      state: present
+
+  - name: Install Docker
+    apt:
+      pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose-plugin
+      state: latest
+      update_cache: true
+
+  - block: # Apache
+    
+    - name: Create work dir
+      shell: mkdir /home/ubuntu/MyWebSite | sudo chown -R ubuntu:ubuntu /home/ubuntu/MyWebSite
+
+    - name: Run Apache in Docker
+      shell: sudo docker run --restart always -dit --name apache-deploy -p 8080:80 -v /home/ubuntu/MyWebSite:/usr/local/apache2/htdocs/ httpd:2.4
+
+    when: inventory_hostname =='apache_srv'
+  
+  - block: #Jenkins
+
+    - name: Run Jenkins Docker
+      shell: "sudo docker run -d --restart always -p 8080:8080 --name=jenkins jenkins/jenkins"
+
+    - name: Get AdminPass
+      shell: "sudo docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
+      register: jenkins_password
+      retries: 6
+      delay: 5
+      until: jenkins_password.rc == 0
+
+    - name: Print AdminPass
+      debug: 
+        var: jenkins_password.stdout
+
+    when: inventory_hostname =='jenkins_srv'
+
+  # - name: Ansible sleep
+  #   ansible.builtin.pause:
+  #     seconds: 30
+
+  # - name: Run a simple command (command)
+  #   community.docker.docker_container_exec:
+  #     container: foo
+  #     command: /bin/bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+  #     chdir: /root
+  #   register: result
+
+  # - name: Print stdout
+  #   debug:
+  #     var: result.stdout
+  #   when: inventory_hostname =='jenkins_srv'
+
+  # - block: # For Debian
+
+  #   - name: Install apache
+  #     apt: name=apache2 update_cache=yes state=latest
+    
+  #   - name: Start apache in boot
+  #     service: name=apache2 state=started enabled=yes
+
+  #   when: ansible_os_family == "Debian"
+
+  # - name: Generate index.html using template
+  #   template: src={{ source_dir }}/index.j2 dest={{ destin_dir }}/index.html mode=0555
+  #   notify:
+  #        - Restart Apache Debian
+  
+  
+  # - name: Copy dir to server
+  #   copy: src={{ source_dir }}/photo.jpeg dest={{ destin_dir }} mode=0555
+  #   notify:
+  #        - Restart Apache Debian
+
+
+  # handlers:
+  # - name: Restart Apache Debian
+  #   service: name=apache2 state=restarted 
+  #   when: ansible_os_family == "Debian"
+
+
