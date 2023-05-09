@@ -1,6 +1,0 @@
----
-- name: Change hostname in /etc/hosts
-  shell: sed -i "s/{{hostvars[inventory_hostname].ansible_facts.hostname}}/{{inventory_hostname}}/g" /etc/hosts
-
-- hostname:
-    name: "{{inventory_hostname}}"

@@ -1,0 +1,6 @@
+- name: Install haproxy
+  apt:
+    name:
+      - haproxy
+      - ufw
+    state: present

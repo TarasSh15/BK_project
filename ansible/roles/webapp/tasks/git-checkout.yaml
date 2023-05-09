@@ -1,0 +1,4 @@
+- name: Git checkout
+  git:
+    repo: 'https://github.com/TarasSh15/kursova-db'
+    dest: "{{checkout_dir}}"

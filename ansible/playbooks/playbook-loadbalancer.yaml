@@ -1,0 +1,7 @@
+---
+- hosts: loadbalancer
+  become: true
+  roles:
+    - loadbalancer
+  tags:
+    - loadbalancer

@@ -43,6 +43,36 @@ resource "aws_instance" "WebApp" {
   }
 }
 
+resource "aws_s3_bucket" "dbdump" {
+  bucket = "tf-mysql-bucket-forapp"
+
+  tags = {
+    Name        = "tf-mysql-bucket-forapp"
+    Environment = "Dev"
+  }
+}
+
+resource "aws_s3_bucket_object" "s3dump" {
+  bucket = aws_s3_bucket.dbdump.id
+  for_each = fileset("./dumps/", "**")
+  key = each.value
+  source = "./dumps/${each.value}"
+  etag = filemd5("./dumps/${each.value}")
+}
+
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  db_name              = "mydb"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  username             = "foo"
+  password             = "foobarbaz"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+}
+
+#-----------------------------------------------------------
 # resource "aws_instance" "Jenkins" {
 #   ami                         = "ami-0c9354388bb36c088"
 #   instance_type               = "t2.micro"

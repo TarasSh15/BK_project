@@ -1,0 +1,28 @@
+- name: Reset UFW
+  community.general.ufw: 
+    state: reset
+
+- name: Aplly forward
+  community.general.ufw:
+    route: true
+
+- name: Allow port range 20000-20003
+  community.general.ufw:
+    rule: allow
+    port: 20000:20003
+    proto: tcp
+
+- name: Allow incoming access to eth0 from 1.2.3.5 port 5469 to 1.2.3.4 port 5469
+  community.general.ufw:
+    rule: allow
+    interface: eth0
+    direction: in
+    proto: udp
+    src: 1.2.3.5
+    from_port: '5469'
+    dest: 1.2.3.4
+    to_port: '5469'
+
+- name: Enabled Firewall
+  community.general.ufw:
+    state: enabled

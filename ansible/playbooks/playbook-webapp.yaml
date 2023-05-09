@@ -1,0 +1,8 @@
+---
+- hosts: webapp
+  become: true
+  roles:
+    - webapp
+    - nginx
+  tags:
+    - webapp

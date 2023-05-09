@@ -1,0 +1,4 @@
+- include: install-apt.yaml
+- include: set-ufw.yaml
+- include: generate-config.yaml
+- include: service-restart.yaml

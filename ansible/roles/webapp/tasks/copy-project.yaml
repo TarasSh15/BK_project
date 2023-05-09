@@ -1,0 +1,12 @@
+- name: Create root directory
+  file:
+    path: /site
+    state: directory
+    mode: '0755'
+
+- name: Copy FE part
+  copy:
+    src: "{{checkout_dir}}/site"
+    dest: "/"
+    remote_src: yes 
+    directory_mode: yes
