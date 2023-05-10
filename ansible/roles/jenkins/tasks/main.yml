@@ -1,0 +1,13 @@
+- name: Run Jenkins Docker
+  shell: "sudo docker run -d --restart always -p 8080:8080 --name=jenkins jenkins/jenkins"
+
+- name: Get AdminPass
+  shell: "sudo docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword"
+  register: jenkins_password
+  retries: 6
+  delay: 5
+  until: jenkins_password.rc == 0
+
+- name: Print AdminPass
+  debug: 
+    var: jenkins_password.stdout

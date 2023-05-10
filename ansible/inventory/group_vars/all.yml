@@ -4,3 +4,5 @@ inventory_path: "/home/taras/.ssh"
 ansible_become: true
 
 checkout_dir: /tmp/checkout
+
+docker_apt_gpg_key_url: "https://download.docker.com/ubuntu/debian/gpg"

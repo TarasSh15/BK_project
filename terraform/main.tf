@@ -43,34 +43,34 @@ resource "aws_instance" "WebApp" {
   }
 }
 
-resource "aws_s3_bucket" "dbdump" {
-  bucket = "tf-mysql-bucket-forapp"
+# resource "aws_s3_bucket" "dbdump" {
+#   bucket = "tf-mysql-bucket-forapp"
 
-  tags = {
-    Name        = "tf-mysql-bucket-forapp"
-    Environment = "Dev"
-  }
-}
+#   tags = {
+#     Name        = "tf-mysql-bucket-forapp"
+#     Environment = "Dev"
+#   }
+# }
 
-resource "aws_s3_bucket_object" "s3dump" {
-  bucket = aws_s3_bucket.dbdump.id
-  for_each = fileset("./dumps/", "**")
-  key = each.value
-  source = "./dumps/${each.value}"
-  etag = filemd5("./dumps/${each.value}")
-}
+# resource "aws_s3_bucket_object" "s3dump" {
+#   bucket = aws_s3_bucket.dbdump.id
+#   for_each = fileset("./dumps/", "**")
+#   key = each.value
+#   source = "./dumps/${each.value}"
+#   etag = filemd5("./dumps/${each.value}")
+# }
 
-resource "aws_db_instance" "default" {
-  allocated_storage    = 10
-  db_name              = "mydb"
-  engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t3.micro"
-  username             = "foo"
-  password             = "foobarbaz"
-  parameter_group_name = "default.mysql5.7"
-  skip_final_snapshot  = true
-}
+# resource "aws_db_instance" "display" {
+#   allocated_storage    = 10
+#   db_name              = "display"
+#   engine               = "mysql"
+#   engine_version       = "8.0.32"
+#   instance_class       = "db.t3.micro"
+#   username             = "root"
+#   password             = "123321"
+#   parameter_group_name = "default.mysql8.0.32"
+#   skip_final_snapshot  = true
+# }
 
 #-----------------------------------------------------------
 # resource "aws_instance" "Jenkins" {

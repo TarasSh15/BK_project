@@ -4,7 +4,7 @@
     state: directory
     mode: '0755'
 
-- name: Copy FE part
+- name: Copy web-site
   copy:
     src: "{{checkout_dir}}/site"
     dest: "/"

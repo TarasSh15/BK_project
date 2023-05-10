@@ -1,0 +1,23 @@
+- name: Install mysql-server
+  apt:
+    name: 
+    - mysql-server
+    - python3-mysqldb
+
+- name: Start mysql-server
+  service:
+    name: mysql.service
+    state:  started
+
+- name: Set root user password
+  mysql_user:
+    name: root
+    host: localhost
+    password: "123321"
+
+- name: delete anonymous MySQL server user for localhost
+  action: mysql_user user="" state="absent"
+
+- name: remove the MySQL test database
+  action: mysql_db db=test state=absen
+

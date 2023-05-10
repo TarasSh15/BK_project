@@ -2,6 +2,6 @@
 - hosts: jnks-sql
   become: true
   roles:
-    - mysql
+    - jenkins
   tags:
-    - mysql
+    - jenkins

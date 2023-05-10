@@ -1,0 +1,7 @@
+---
+- hosts: general
+  become: true
+  roles:
+    - docker
+  tags:
+    - docker

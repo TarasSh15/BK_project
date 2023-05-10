@@ -1,5 +1,5 @@
 ---
-- hosts: webapp
+- hosts: all
   become: true
   roles:
     - common
