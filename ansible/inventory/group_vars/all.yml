@@ -5,4 +5,6 @@ ansible_become: true
 
 checkout_dir: /tmp/checkout
 
+mysql_root_password: "123321"
+
 docker_apt_gpg_key_url: "https://download.docker.com/ubuntu/debian/gpg"

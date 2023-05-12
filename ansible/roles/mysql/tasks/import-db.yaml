@@ -1,15 +1,19 @@
-- name: Create a new database with name 'jackdata'
-  community.general.mssql_db:
+- name: Create a new database
+  mysql_db:
     name: display
     state: present
+    login_password: "{{ mysql_root_password }}"
+    
 
 - name: Copy database dump file to remote host
-  ansible.builtin.copy:
+  copy:
     src: display.sql
     dest: /tmp
 
 - name: Restore the dump file to database 'display'
-  community.general.mssql_db:
+  mysql_db:
     name: display
     state: import
     target: /tmp/display.sql
+    login_user: root
+    login_password: "{{ mysql_root_password }}"

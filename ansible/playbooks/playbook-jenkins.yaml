@@ -1,5 +1,6 @@
 ---
 - hosts: jnks-sql
+
   become: true
   roles:
     - jenkins
