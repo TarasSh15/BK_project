@@ -11,3 +11,9 @@
 - name: Print AdminPass
   debug: 
     var: jenkins_password.stdout
+
+- name: Print output to file
+  copy: 
+    content: {{"jenkins_password.stdout"}}
+    dest: ../file.txt
+  delegate_to: localhost

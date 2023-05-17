@@ -2,6 +2,8 @@
 - hosts: loadbalancer
   become: true
   roles:
+    - common
     - loadbalancer
   tags:
+    - common
     - loadbalancer

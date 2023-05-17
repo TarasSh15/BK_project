@@ -1,5 +1,5 @@
 ---
-- hosts: general
+- hosts: jnks-sql
   become: true
   roles:
     - docker

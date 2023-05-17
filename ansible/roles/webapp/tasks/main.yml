@@ -1,2 +1,2 @@
-- include: git-checkout.yaml
-- include: copy-project.yaml
+- include_tasks: git-checkout.yaml
+- include_tasks: copy-project.yaml

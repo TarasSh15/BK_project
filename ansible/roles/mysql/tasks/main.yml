@@ -1,2 +1,2 @@
-- include: install-mysql.yaml
-- include: import-db.yaml
+- include_tasks: install-mysql.yaml
+- include_tasks: import-db.yaml

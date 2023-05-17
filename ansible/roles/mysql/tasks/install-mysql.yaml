@@ -20,7 +20,7 @@
 - name: Create database user 'php'
   mysql_user:
     name: php
-    host: "{{ hostvars[groups['webapp'][0]].ansible_host }}"
+    host: "172.31.%.%"
     password: "{{ mysql_root_password }}"
     priv: '*.*:ALL'
     state: present

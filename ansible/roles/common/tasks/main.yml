@@ -1,1 +1,1 @@
-- include: apt-update.yaml
+- include_tasks: apt-update.yaml

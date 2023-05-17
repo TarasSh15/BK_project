@@ -1,2 +1,2 @@
-- include: install-nginx.yaml
-- include: apply-template.yaml
+- include_tasks: install-nginx.yaml
+- include_tasks: apply-template.yaml

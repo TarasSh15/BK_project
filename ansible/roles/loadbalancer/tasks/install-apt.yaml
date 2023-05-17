@@ -2,5 +2,14 @@
   apt:
     name:
       - haproxy
-      - ufw
     state: present
+
+- name: Generate config
+  template:
+    src: files/haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+
+- name: Restart Haproxy
+  service:
+    name: haproxy
+    state: restarted

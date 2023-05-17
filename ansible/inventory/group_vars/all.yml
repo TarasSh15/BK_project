@@ -1,10 +1,19 @@
-inventory_path: "/home/taras/.ssh"
+inventory_path: "/home/taras/diplomna/ansible"
 
-#ansible_ssh_private_key_file: "{{inventory_path}}/aws_key.pem"
+ansible_ssh_private_key_file: "{{inventory_path}}/aws_key.pem"
 ansible_become: true
+
+jenkins_sql_local_ip:   "172.31.47.242"
+jenkins_sql_local_port: "30000"
+
+web_server_1_local_ip:   "172.31.39.55"
+web_server_1_local_port: "30001"
+
+web_server_2_local_ip:   "172.31.35.24"
+web_server_2_local_port: "30002"
 
 checkout_dir: /tmp/checkout
 
 mysql_root_password: "123321"
 
-docker_apt_gpg_key_url: "https://download.docker.com/ubuntu/debian/gpg"
+docker_apt_gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"

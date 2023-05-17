@@ -1,4 +1,2 @@
-- include: install-apt.yaml
-- include: set-ufw.yaml
-- include: generate-config.yaml
-- include: service-restart.yaml
+- include_tasks: set-nat.yaml
+- include_tasks: install-apt.yaml

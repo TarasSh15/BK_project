@@ -22,13 +22,12 @@ defaults
         timeout check 10s
         maxconn 3000
 
-frontend ssh-connserv1
-        bind *:2222 
-        mode tcp
-        default_backend ssh-all
+frontend app_frontend
+        bind *:80
+        default_backend app_backend
 
-{% for master in groups['web-apps'] %}
-backend {{hostvars[master].inventory_hostname}}
-   mode tcp
-   server ubuntu {{hostvars[master].ansible_host}}:22 check
-{% endfor %}
+backend app_backend
+        mode http
+        balance roundrobin
+        server {{hostvars[aws-ec2-webapp1].inventory_hostname}} {{web_server_1_local_ip}}:80 check
+        server {{hostvars[aws-ec2-webapp2].inventory_hostname}} {{web_server_2_local_ip}}:80 check

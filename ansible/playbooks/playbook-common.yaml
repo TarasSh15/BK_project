@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: general
   become: true
   roles:
     - common
