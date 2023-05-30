@@ -1,5 +1,5 @@
 ---
-- hosts: loadbalancer
+- hosts: lb-jenkins
   become: true
   roles:
     - common

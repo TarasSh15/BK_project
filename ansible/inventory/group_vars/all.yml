@@ -3,14 +3,25 @@ inventory_path: "/home/taras/diplomna/ansible"
 ansible_ssh_private_key_file: "{{inventory_path}}/aws_key.pem"
 ansible_become: true
 
-jenkins_sql_local_ip:   "172.31.47.242"
+lb_jenkins_ip: "3.67.79.35"
+
+jenkins_sql_local_ip:   "172.31.45.139"
 jenkins_sql_local_port: "30000"
 
-web_server_1_local_ip:   "172.31.39.55"
+web_server_1_local_ip:   "172.31.39.31"
 web_server_1_local_port: "30001"
 
-web_server_2_local_ip:   "172.31.35.24"
+web_server_2_local_ip:   "172.31.39.223"
 web_server_2_local_port: "30002"
+
+ip_port_for_nat:
+  "{{ jenkins_sql_local_ip }}": "{{ jenkins_sql_local_port }}"
+  "{{ web_server_1_local_ip }}": "{{ web_server_1_local_port }}"
+  "{{ web_server_2_local_ip }}": "{{ web_server_2_local_port }}"
+
+ip_list_for_lb:
+  - "{{web_server_1_local_ip}}"
+  - "{{web_server_2_local_ip}}"
 
 checkout_dir: /tmp/checkout
 

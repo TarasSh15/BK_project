@@ -1,5 +1,5 @@
 ---
-- hosts: jnks-sql
+- hosts: sql-server
   become: true
   roles:
     - mysql

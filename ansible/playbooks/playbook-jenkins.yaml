@@ -1,5 +1,5 @@
 ---
-- hosts: jnks-sql
+- hosts: lb-jenkins
 
   become: true
   roles:

@@ -1,18 +1,18 @@
 - name: Enable ip forward
   shell: sudo sysctl -w net.ipv4.ip_forward=1
 
-- name: Route ports 22
-  shell: sudo iptables -t nat -A PREROUTING -p tcp --dport "{{ item.port }}" -j DNAT --to-destination "{{ item.ip }}":22
-  loop: 
-    - { ip: "{{ jenkins_sql_local_ip }}" , port: "{{ jenkins_sql_local_port }}" }
-    - { ip: "{{ web_server_1_local_ip }}", port: "{{ web_server_1_local_port }}" }
-    - { ip: "{{ web_server_2_local_ip }}", port: "{{ web_server_2_local_port }}" }
+- name: Flush nat table
+  shell: sudo iptables -t nat -F
 
-- name: Route port 3306 and 8080
+- name: Route ports 22
+  shell: sudo iptables -t nat -A PREROUTING -p tcp --dport "{{ item.value }}" -j DNAT --to-destination "{{ item.key }}":22
+  loop: "{{ip_port_for_nat|dict2items}}"
+
+- name: Route port 3306
   shell: sudo iptables -t nat -A PREROUTING -p tcp --dport "{{ item }}" -j DNAT --to-destination "{{ jenkins_sql_local_ip }}":"{{ item }}"
   loop:
   - 3306
-  - 8080
+  #- 8080
 
 - name: Enable masquerade
   shell: sudo iptables -t nat -A POSTROUTING ! -s 127.0.0.1 -j MASQUERADE
