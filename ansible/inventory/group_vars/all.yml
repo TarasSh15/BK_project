@@ -1,21 +1,20 @@
-inventory_path: "/home/taras/diplomna/ansible"
-
+inventory_path: "/home/taras/BK_project/ansible"
 ansible_ssh_private_key_file: "{{inventory_path}}/aws_key.pem"
 ansible_become: true
 
-lb_jenkins_ip: "3.67.79.35"
+lb_jenkins_ip: "18.185.184.90"
 
-jenkins_sql_local_ip:   "172.31.45.139"
-jenkins_sql_local_port: "30000"
+sql_local_ip:   "172.31.31.240"
+sql_local_port: "30000"
 
-web_server_1_local_ip:   "172.31.39.31"
+web_server_1_local_ip:   "172.31.20.101"
 web_server_1_local_port: "30001"
 
-web_server_2_local_ip:   "172.31.39.223"
+web_server_2_local_ip:   "172.31.22.243"
 web_server_2_local_port: "30002"
 
 ip_port_for_nat:
-  "{{ jenkins_sql_local_ip }}": "{{ jenkins_sql_local_port }}"
+  "{{ sql_local_ip }}": "{{ sql_local_port }}"
   "{{ web_server_1_local_ip }}": "{{ web_server_1_local_port }}"
   "{{ web_server_2_local_ip }}": "{{ web_server_2_local_port }}"
 
@@ -23,8 +22,9 @@ ip_list_for_lb:
   - "{{web_server_1_local_ip}}"
   - "{{web_server_2_local_ip}}"
 
-checkout_dir: /tmp/checkout
-
 mysql_root_password: "123321"
 
+checkout_dir: /tmp/checkout
+
 docker_apt_gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+docker_apt_url: "https://download.docker.com/linux/ubuntu"

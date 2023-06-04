@@ -29,7 +29,7 @@
 - name: Comment bind
   shell: sed -i 's/^bind-address/#bind-address/' /etc/mysql/mysql.conf.d/mysqld.cnf
 
-- name: Start mysql-server
+- name: Restart mysql-server
   service:
     name: mysql
     state:  restarted

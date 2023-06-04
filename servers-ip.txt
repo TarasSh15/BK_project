@@ -1,0 +1,4 @@
+lb_public_ip = "35.158.252.122"
+sql_private_ip = "172.31.31.240"
+webapp1_private_ip = "172.31.20.101"
+webapp2_private_ip = "172.31.22.243"

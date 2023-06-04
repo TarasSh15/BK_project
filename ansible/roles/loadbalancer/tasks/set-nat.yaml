@@ -9,10 +9,9 @@
   loop: "{{ip_port_for_nat|dict2items}}"
 
 - name: Route port 3306
-  shell: sudo iptables -t nat -A PREROUTING -p tcp --dport "{{ item }}" -j DNAT --to-destination "{{ jenkins_sql_local_ip }}":"{{ item }}"
+  shell: sudo iptables -t nat -A PREROUTING -p tcp --dport "{{ item }}" -j DNAT --to-destination "{{ sql_local_ip }}":"{{ item }}"
   loop:
   - 3306
-  #- 8080
 
 - name: Enable masquerade
   shell: sudo iptables -t nat -A POSTROUTING ! -s 127.0.0.1 -j MASQUERADE

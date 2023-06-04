@@ -6,7 +6,7 @@
     - gnupg
 
 - name: Add an Apt signing key
-  ansible.builtin.apt_key:
+  apt_key:
     url: "{{ docker_apt_gpg_key_url }}"
     state: present
 
@@ -15,8 +15,8 @@
   register: architecture
 
 - name: Add specified repository into sources list
-  ansible.builtin.apt_repository:
-    repo: deb [arch={{ architecture.stdout }}] https://download.docker.com/linux/ubuntu {{ hostvars[inventory_hostname].ansible_distribution_release }} stable
+  apt_repository:
+    repo: deb [arch={{ architecture.stdout }}] "{{ docker_apt_url }}" {{ hostvars[inventory_hostname].ansible_distribution_release }} stable
     state: present
 
 - name: Install docker

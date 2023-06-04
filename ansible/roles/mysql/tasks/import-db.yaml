@@ -4,7 +4,6 @@
     state: present
     login_password: "{{ mysql_root_password }}"
     
-
 - name: Copy database dump file to remote host
   copy:
     src: display.sql

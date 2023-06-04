@@ -1,8 +1,14 @@
+- name: Create jenkins directory
+  file:
+    path: /home/ubuntu/jenkins_dir
+    state: directory
+    mode: '0777'
+
 - name: Run Jenkins Docker
-  shell: "docker run -d -p 8080:8080 -p 50000:50000 --restart=on-failure -v /home/ubuntu:/var jenkins/jenkins:lts-jdk11"
+  shell: "sudo docker run -d -p 8080:8080 -p 50000:50000 --restart=on-failure -v /home/ubuntu/jenkins_dir:/var/jenkins_home jenkins/jenkins:lts-jdk11"
 
 - name: Get AdminPass
-  shell: "sudo cat /home/ubuntu/jenkins_home/secrets/initialAdminPassword"
+  shell: "sudo cat /home/ubuntu/jenkins_dir/secrets/initialAdminPassword"
   register: jenkins_password
   retries: 6
   delay: 5
@@ -15,5 +21,7 @@
 - name: Print output to file
   copy: 
     content: "{{jenkins_password.stdout}}"
-    dest: ../jenkins-adnminpass.txt
+    dest: ../jenkins-adminpass.txt
   delegate_to: localhost
+  become: false
+  become_user: taras
